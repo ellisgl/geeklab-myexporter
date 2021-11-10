@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae8d72ab14046e43500626b609c6f5e0",
+    "content-hash": "e85dff05a11e5c80005edc5a4211cba4",
     "packages": [
         {
             "name": "filp/whoops",
@@ -76,6 +76,63 @@
                 }
             ],
             "time": "2021-10-03T12:00:00+00:00"
+        },
+        {
+            "name": "inhere/sroute",
+            "version": "v3.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inhere/php-srouter.git",
+                "reference": "52b05f0b8438f8fc1fe6eab589e22306a0b715df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inhere/php-srouter/zipball/52b05f0b8438f8fc1fe6eab589e22306a0b715df",
+                "reference": "52b05f0b8438f8fc1fe6eab589e22306a0b715df",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">7.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5"
+            },
+            "suggest": {
+                "inhere/simple-print-tool": "Very lightweight data printing tools"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Inhere\\Route\\": "src/"
+                },
+                "files": [
+                    "src/Helper/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "inhere",
+                    "email": "in.798@qq.com",
+                    "homepage": "http://www.yzone.net/"
+                }
+            ],
+            "description": "a very lightweight and fasted request router.",
+            "homepage": "https://github.com/inhere/php-srouter",
+            "keywords": [
+                "library",
+                "php-router",
+                "route",
+                "router"
+            ],
+            "support": {
+                "issues": "https://github.com/inhere/php-srouter/issues",
+                "source": "https://github.com/inhere/php-srouter/tree/v3.0.6"
+            },
+            "time": "2020-10-21T03:26:56+00:00"
         },
         {
             "name": "psr/log",
@@ -429,6 +486,96 @@
                 }
             ],
             "time": "2021-07-28T13:41:28+00:00"
+        },
+        {
+            "name": "symfony/routing",
+            "version": "v5.3.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/routing.git",
+                "reference": "be865017746fe869007d94220ad3f5297951811b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/be865017746fe869007d94220ad3f5297951811b",
+                "reference": "be865017746fe869007d94220ad3f5297951811b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/deprecation-contracts": "^2.1",
+                "symfony/polyfill-php80": "^1.16"
+            },
+            "conflict": {
+                "doctrine/annotations": "<1.12",
+                "symfony/config": "<5.3",
+                "symfony/dependency-injection": "<4.4",
+                "symfony/yaml": "<4.4"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.12",
+                "psr/log": "^1|^2|^3",
+                "symfony/config": "^5.3",
+                "symfony/dependency-injection": "^4.4|^5.0",
+                "symfony/expression-language": "^4.4|^5.0",
+                "symfony/http-foundation": "^4.4|^5.0",
+                "symfony/yaml": "^4.4|^5.0"
+            },
+            "suggest": {
+                "symfony/config": "For using the all-in-one router or any loader",
+                "symfony/expression-language": "For using expression matching",
+                "symfony/http-foundation": "For using a Symfony Request object",
+                "symfony/yaml": "For using the YAML loader"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Routing\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Maps an HTTP request to a set of configuration variables",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "router",
+                "routing",
+                "uri",
+                "url"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/routing/tree/v5.3.7"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-08-04T21:42:42+00:00"
         }
     ],
     "packages-dev": [],

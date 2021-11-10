@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Inhere\Route\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Whoops\Handler\PrettyPageHandler;
@@ -36,8 +37,17 @@ $request = new Request($_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER);
 // Set up the response object.
 $response = new Response();
 
-// Testing.
-$response->setContent('Hello, World!');
+// Set up router.
+$router = new Router();
+
+// Load in routes
+$routes = include('../conf/Routes.php');
+foreach($routes as $route) {
+    $router->map($route['methods'], $route['path'], $route['handler']);
+}
+
+// Do the routing.
+$router->dispatch();
 
 // Output the response to the viewer.
 $response->send();
