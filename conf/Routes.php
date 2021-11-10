@@ -8,9 +8,7 @@ return [
     [
         'methods' => ['GET'],
         'path' => '/',
-        'handler' => static function () use ($response) {
-            $response->setContent('Router: Hello, World 1!');
-        }
+        'handler' => 'App\Controllers\HomepageController@index'
     ],
     [
         'methods' => ['GET'],

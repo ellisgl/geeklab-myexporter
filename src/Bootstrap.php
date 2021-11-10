@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
+// use App\Controllers\HomepageController;
+use App\Controllers\HomepageController;
+use Inhere\Route\Dispatcher\Dispatcher;
 use Inhere\Route\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,12 +45,18 @@ $router = new Router();
 
 // Load in routes
 $routes = include('../conf/Routes.php');
+
 foreach($routes as $route) {
-    $router->map($route['methods'], $route['path'], $route['handler']);
+    $router->map(
+        $route['methods'],
+        $route['path'],
+        $route['handler'],
+        !empty($route['params']) && is_array($route['params']) ? $route['params'] : []
+    );
 }
 
 // Do the routing.
-$router->dispatch();
+$router->dispatch(new Dispatcher(['actionSuffix' => '']));
 
 // Output the response to the viewer.
 $response->send();
