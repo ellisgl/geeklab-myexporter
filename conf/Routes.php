@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\HomepageController;
+use App\Controllers\PageController;
 use Symfony\Component\HttpFoundation\Response;
 
 return [
@@ -11,14 +12,14 @@ return [
     ],
     [
         'methods' => ['GET'],
-        'path' => '/hello-world',
-        'handler' => [HomepageController::class, 'test']
+        'path' => '/another-route',
+        'handler' => static function (Response $response) {
+            $response->setContent('This works too.');
+        }
     ],
     [
         'methods' => ['GET'],
-        'path' => '/another-route',
-        'handler' => function (Response $response) {
-            $response->setContent('This works too.');
-        }
+        'path' => '/{slug}',
+        'handler' => [PageController::class, 'show']
     ],
 ];

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Page\PageReader;
+use App\Page\FilePageReader;
 use App\Core\Renderer;
 use App\Core\Template\MustacheRenderer;
 use Auryn\Injector;
@@ -41,5 +43,15 @@ $injector->define(
         ],
     ]
 );
+
+// Pager Reader stuff.
+$injector->define(
+    FilePageReader::class,
+    [
+        ':pageFolder' => __DIR__ . '/../pages',
+    ]
+);
+$injector->alias(PageReader::class, FilePageReader::class);
+$injector->share(FilePageReader::class);
 
 return $injector;
