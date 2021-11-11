@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\HomepageController;
+use App\Controllers\LoginController;
 use App\Controllers\PageController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,8 +19,15 @@ return [
         }
     ],
     [
+        'methods' => ['GET', 'POST'],
+        'path' => '/login',
+        'handler' => [LoginController::class, 'index']
+    ],
+    // Wildcards need to be at the bottom.
+    [
         'methods' => ['GET'],
         'path' => '/{slug}',
         'handler' => [PageController::class, 'show']
     ],
+
 ];

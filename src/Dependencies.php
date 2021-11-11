@@ -37,27 +37,15 @@ $injector->define(
 $injector->share(Response::class);
 
 // Template render
-//$injector->define(
-//    'Mustache_Engine',
-//    [
-//        ':options' => [
-//            'loader' => new Mustache_Loader_FilesystemLoader(
-//                dirname(__DIR__) . '/templates',
-//                ['extension' => '.html',]
-//            ),
-//        ],
-//    ]
-//);
-
 $injector->delegate('Twig_Environment', function () use ($injector) {
     $loader = new Twig_Loader_Filesystem(dirname(__DIR__) . '/templates');
     return new Environment($loader);
 });
-
 $injector->alias(Environment::class, 'Twig_Environment');
 $injector->alias(Renderer::class, TwigRenderer::class);
-$injector->alias(FrontendRenderer::class, FrontendTwigRenderer::class);
 
+// Template engine extending.
+$injector->alias(FrontendRenderer::class, FrontendTwigRenderer::class);
 // Template engine extending.
 $injector->alias(MenuReader::class, ArrayMenuReader::class);
 $injector->share(ArrayMenuReader::class);
