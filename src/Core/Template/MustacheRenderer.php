@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Core\Template;
 
@@ -14,7 +16,7 @@ class MustacheRenderer implements Renderer
         $this->engine = $engine;
     }
 
-    public function render($template, $data = []) : string
+    public function render($template, $data = []): string
     {
         return $this->engine->render($template, $data);
     }
