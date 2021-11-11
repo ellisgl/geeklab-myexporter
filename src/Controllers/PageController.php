@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\BaseController;
 use App\Page\InvalidPageException;
 
 class PageController extends BaseController

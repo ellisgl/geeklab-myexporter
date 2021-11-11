@@ -18,6 +18,6 @@ class TwigRenderer implements Renderer
 
     public function render($template, $data = []) : string
     {
-        return $this->renderer->render("$template.html", $data);
+        return $this->renderer->render("$template.html.twig", $data);
     }
 }
