@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use Auryn\Injector;
+use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,19 +53,19 @@ $routeDefinitionCallback = static function (RouteCollector $r) {
 $dispatcher = simpleDispatcher($routeDefinitionCallback);
 
 // Match the route.
-$routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getRequestUri());
+$routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
 
 // Add in some extra case handling and execute the route endpoint.
 switch ($routeInfo[0]) {
-    case \FastRoute\Dispatcher::NOT_FOUND:
+    case Dispatcher::NOT_FOUND:
         $response->setContent('404 - Page not found');
         $response->setStatusCode(404);
         break;
-    case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+    case Dispatcher::METHOD_NOT_ALLOWED:
         $response->setContent('405 - Method not allowed');
         $response->setStatusCode(405);
         break;
-    case \FastRoute\Dispatcher::FOUND:
+    case Dispatcher::FOUND:
         if (is_array($routeInfo[1])) {
             // Controller class and method.
             [$className, $method] = $routeInfo[1];

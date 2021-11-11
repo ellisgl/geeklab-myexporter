@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Core\Template\TwigRenderer;
 use App\Page\PageReader;
 use App\Page\FilePageReader;
 use App\Core\Renderer;
@@ -9,6 +10,8 @@ use App\Core\Template\MustacheRenderer;
 use Auryn\Injector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Loader\FilesystemLoader as Twig_Loader_Filesystem;
+use Twig\Environment;
 
 // Create the injector.
 $injector = new Injector();
@@ -18,8 +21,8 @@ $injector->share(Request::class);
 $injector->define(
     Request::class,
     [
-        ':get'        => $_GET,
-        ':post'       => $_POST,
+        ':query'      => $_GET,
+        ':request'    => $_POST,
         ':attributes' => [],
         ':cookies'    => $_COOKIE,
         ':files'      => $_FILES,
@@ -31,7 +34,6 @@ $injector->define(
 $injector->share(Response::class);
 
 // Template render
-$injector->alias(Renderer::class, MustacheRenderer::class);
 $injector->define(
     'Mustache_Engine',
     [
@@ -43,6 +45,14 @@ $injector->define(
         ],
     ]
 );
+
+$injector->delegate('Twig_Environment', function () use ($injector) {
+    $loader = new Twig_Loader_Filesystem(dirname(__DIR__) . '/templates');
+    return new Environment($loader);
+});
+
+$injector->alias(Environment::class, 'Twig_Environment');
+$injector->alias(Renderer::class, TwigRenderer::class);
 
 // Pager Reader stuff.
 $injector->define(
