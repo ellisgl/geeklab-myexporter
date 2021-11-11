@@ -1,26 +1,23 @@
 <?php
 
+use App\Controllers\HomepageController;
 use Symfony\Component\HttpFoundation\Response;
-
-/** @var Response $response */
 
 return [
     [
         'methods' => ['GET'],
         'path' => '/',
-        'handler' => 'App\Controllers\HomepageController@index'
+        'handler' => [HomepageController::class, 'index']
     ],
     [
         'methods' => ['GET'],
         'path' => '/hello-world',
-        'handler' => static function () use ($response) {
-            $response->setContent('Router: Hello, World 2!');
-        }
+        'handler' => [HomepageController::class, 'test']
     ],
     [
         'methods' => ['GET'],
         'path' => '/another-route',
-        'handler' => static function () use ($response) {
+        'handler' => function (Response $response) {
             $response->setContent('This works too.');
         }
     ],
