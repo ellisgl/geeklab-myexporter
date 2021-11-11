@@ -7,8 +7,12 @@ namespace App;
 use Auryn\Injector;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use GeekLab\Conf\Driver\ArrayConfDriver;
+use GeekLab\Conf\GLConf;
+use \PDO;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -18,7 +22,10 @@ require __DIR__ . '/../vendor/autoload.php';
 
 error_reporting(E_ALL);
 
-$environment = 'development';
+// Configuration
+$config = new GLConf(new ArrayConfDriver(__DIR__ . '/../config/config.php', __DIR__ . '/../config/'));
+$config->init();
+$environment = $config->get('env');
 
 /**
  * Register the error handler
@@ -42,12 +49,28 @@ $injector = include('Dependencies.php');
 $request = $injector->make(Request::class);
 /** @var Response $response */
 $response = $injector->make(Response::class);
+/** @var Session $session */
+$session = $injector->make(Session::class);
+
+// Share the configuration.
+$injector->share($config);
+
+// Setup DB connections.
+if (1 === $session->get('loggedIn')) {
+    $dbConn = new PDO(
+        'mysql:host=' . $session->get('dbh') . ';',
+        $session->get('dbu'),
+        $session->get('dbp'),
+        [PDO::ATTR_PERSISTENT => false]
+    );
+
+    $injector->share($dbConn);
+}
 
 // Load up routes for router, and initialize the dispatcher.
-$routeDefinitionCallback = static function (RouteCollector $r) {
-    $routes = include('../conf/Routes.php');
-    foreach ($routes as $route) {
-        $r->addRoute($route['methods'], $route['path'], $route['handler']);
+$routeDefinitionCallback = static function (RouteCollector $r) use ($config) {
+    foreach ($config->get('routes') as $route) {
+        $r->addRoute($route['METHODS'], $route['PATH'], $route['HANDLER']);
     }
 };
 $dispatcher = simpleDispatcher($routeDefinitionCallback);

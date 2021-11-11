@@ -6,25 +6,30 @@ namespace App\Controllers;
 
 use App\Page\PageReader;
 use App\Template\FrontendTwigRenderer;
+use GeekLab\Conf\GLConf;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class BaseController
 {
+    protected GLConf $config;
+    protected FrontendTwigRenderer $renderer;
     protected Request $request;
     protected Response $response;
-    protected FrontendTwigRenderer $renderer;
-    protected PageReader $pageReader;
+    protected Session $session;
 
     public function __construct(
+        GLConf $config,
+        FrontendTwigRenderer $renderer,
         Request $request,
         Response $response,
-        FrontendTwigRenderer $renderer,
-        PageReader $pageReader
+        Session $session
     ) {
+        $this->config = $config;
         $this->request = $request;
         $this->response = $response;
+        $this->session = $session;
         $this->renderer = $renderer;
-        $this->pageReader = $pageReader;
     }
 }

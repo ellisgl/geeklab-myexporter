@@ -6,13 +6,14 @@ use App\Menu\ArrayMenuReader;
 use App\Menu\MenuReader;
 use App\Template\FrontendRenderer;
 use App\Core\Template\TwigRenderer;
-use App\Page\PageReader;
-use App\Page\FilePageReader;
 use App\Core\Renderer;
 use App\Template\FrontendTwigRenderer;
 use Auryn\Injector;
+use GeekLab\Conf\Driver\ArrayConfDriver;
+use GeekLab\Conf\GLConf;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Twig\Loader\FilesystemLoader as Twig_Loader_Filesystem;
 use Twig\Environment;
 
@@ -36,6 +37,9 @@ $injector->define(
 // Stuff for Response.
 $injector->share(Response::class);
 
+// Stuff for Session.
+$injector->share(Session::class);
+
 // Template render
 $injector->delegate('Twig_Environment', function () use ($injector) {
     $loader = new Twig_Loader_Filesystem(dirname(__DIR__) . '/templates');
@@ -46,18 +50,7 @@ $injector->alias(Renderer::class, TwigRenderer::class);
 
 // Template engine extending.
 $injector->alias(FrontendRenderer::class, FrontendTwigRenderer::class);
-// Template engine extending.
 $injector->alias(MenuReader::class, ArrayMenuReader::class);
 $injector->share(ArrayMenuReader::class);
-
-// Pager Reader stuff.
-$injector->define(
-    FilePageReader::class,
-    [
-        ':pageFolder' => __DIR__ . '/../pages',
-    ]
-);
-$injector->alias(PageReader::class, FilePageReader::class);
-$injector->share(FilePageReader::class);
 
 return $injector;
