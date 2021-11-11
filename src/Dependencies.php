@@ -1,12 +1,15 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 use Auryn\Injector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-$injector = new Injector;
+// Create the injector.
+$injector = new Injector();
 
-// $injector->alias(Request::class, 'Http\HttpRequest');
+// Stuff for Request.
 $injector->share(Request::class);
 $injector->define(
     Request::class,
@@ -20,7 +23,7 @@ $injector->define(
     ]
 );
 
-// $injector->alias(Response::class, 'Http\HttpResponse');
+// Stuff for Response.
 $injector->share(Response::class);
 
 return $injector;
