@@ -9,8 +9,6 @@ use App\Core\Template\TwigRenderer;
 use App\Core\Renderer;
 use App\Template\FrontendTwigRenderer;
 use Auryn\Injector;
-use GeekLab\Conf\Driver\ArrayConfDriver;
-use GeekLab\Conf\GLConf;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;

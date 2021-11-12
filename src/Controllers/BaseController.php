@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Core\Exceptions\NotLoggedInException;
-use App\Page\PageReader;
 use App\Template\FrontendTwigRenderer;
 use GeekLab\Conf\GLConf;
 use Symfony\Component\HttpFoundation\Request;

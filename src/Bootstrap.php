@@ -10,7 +10,7 @@ use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use GeekLab\Conf\Driver\ArrayConfDriver;
 use GeekLab\Conf\GLConf;
-use \PDO;
+use PDO;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
