@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Core\Exceptions\NotLoggedInException;
 use App\Page\PageReader;
 use App\Template\FrontendTwigRenderer;
 use GeekLab\Conf\GLConf;
@@ -31,5 +32,12 @@ class BaseController
         $this->response = $response;
         $this->session = $session;
         $this->renderer = $renderer;
+    }
+
+    protected function checkAuthenticated(): void
+    {
+        if (!$this->session->get('loggedIn')) {
+            throw new NotLoggedInException('NOT LOGGED IN');
+        }
     }
 }

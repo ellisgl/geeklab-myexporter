@@ -7,6 +7,7 @@ namespace App\Controllers;
 
 use \Exception;
 use \PDO;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class LoginController extends BaseController
@@ -25,10 +26,9 @@ class LoginController extends BaseController
                 );
 
                 $this->session->set('loggedIn', 1);
-                $this->session->set('dbh', $this->config->get('servers')[(int)$this->request->request->get('host')]);
+                $this->session->set('dbh', $this->config->get('servers')[(int)$this->request->request->get('host')]['HOST']);
                 $this->session->set('dbu', $this->request->request->get('username'));
                 $this->session->set('dbp', $this->request->request->get('password'));
-                $this->session->getFlashBag()->add('warning', 'Good login ' . $this->session->get('dbu'));
             } catch(Exception $e) {
                 $this->session->getFlashBag()->add('error', $e->getMessage());
             }
@@ -42,9 +42,14 @@ class LoginController extends BaseController
             }
         }
 
+        if (1 === $this->session->get('loggedIn')) {
+            // Go to the main page.
+            (new RedirectResponse('/db'))->send();
+            exit();
+        }
+
         $data['servers'] = $this->config->get('servers');
         $html = $this->renderer->render('Login', $data);
         $this->response->setContent($html);
     }
-
 }
