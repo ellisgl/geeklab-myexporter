@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Controllers;
+namespace App\Authentication;
 
+use App\Core\BaseController;
 use Exception;
 use PDO;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class LoginController extends BaseController
+class AuthenticationController extends BaseController
 {
-    public function index(): void
+    public function login(): void
     {
         $data = [];
 

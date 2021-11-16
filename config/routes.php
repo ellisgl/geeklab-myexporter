@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Controllers\DbController;
-use App\Controllers\LoginController;
+use App\Authentication\AuthenticationController;
 
 return [
     'routes' => [
@@ -15,7 +15,7 @@ return [
         [
             'methods' => ['GET', 'POST'],
             'path'    => '/',
-            'handler' => [LoginController::class, 'index']
+            'handler' => [AuthenticationController::class, 'login']
         ],
         // Wildcards need to be at the bottom.
     ]

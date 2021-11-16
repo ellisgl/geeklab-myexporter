@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controllers;
+namespace App\Core;
 
-use App\Core\Exceptions\NotLoggedInException;
+use App\Authentication\NotLoggedInException;
 use App\Template\FrontendTwigRenderer;
 use GeekLab\Conf\GLConf;
 use Symfony\Component\HttpFoundation\Request;
