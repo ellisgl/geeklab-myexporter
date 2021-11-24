@@ -1,0 +1,3 @@
+[submodule "public/assets/sortable"]
+	path = public/assets/sortable
+	url = https://github.com/tofsjonas/sortable

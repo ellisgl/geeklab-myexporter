@@ -1,4 +1,7 @@
 {% extends "Wrapper.html.twig" %}
+{% block styles %}
+    <link rel="stylesheet" href="/assets/sortable/sortable.min.css">
+{% endblock %}
 {% block content %}
     <main>
         <div class="container bg-dark text-white">
@@ -16,10 +19,44 @@
                 </div>
             </header>
         </div>
+        <div class="container">
+            <table id="table-table" class="sortable table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-start">Table Name</th>
+                        <th scope="col" class="size-col">Size</th>
+                        <th scope="col" class="checkbox-col no-sort">Schema</th>
+                        <th scope="col" class="checkbox-col no-sort">Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
     </main>
 {% endblock %}
 {% block js %}
+    <script src="/assets/sortable/sortable.min.js"></script>
     <script>
-        alert('hello!');
+        const tableBody = document.getElementById('table-table').getElementsByTagName('tbody')[0];
+
+        for(let i = 0; i < 3; ++i) {
+            const row = tableBody.insertRow();
+            const random = Math.floor(Math.random() * 999);
+            const c1 = row.insertCell();
+            c1.innerHTML = `Table Name here ${i}`;
+            c1.classList.add('text-start');
+            const c2 = row.insertCell();
+            c2.setAttribute('data-sort', `${random}`);
+            c2.innerHTML = `${random}M`;
+
+            const c3 = row.insertCell();
+            c3.innerHTML = `<input class="form-check-input" type="checkbox" name="schema['table1']" value="1" title="table${i} schema">`;
+            const  c4 = row.insertCell();
+            c4.innerHTML = `<input class="form-check-input" type="checkbox" name="data['table1']" value="1" title="table${i} data">`;
+
+        }
+
     </script>
 {% endblock %}

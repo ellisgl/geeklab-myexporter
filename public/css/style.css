@@ -3,6 +3,14 @@ body {
     height: 100%;
 }
 
+table {
+    /*width: auto !important;*/
+}
+
+th.no-sort {
+    pointer-events: none;
+}
+
 .form-login {
     width: 100%;
     max-width: 330px;
@@ -25,3 +33,12 @@ body {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.checkbox-col {
+    width: 6rem;
+}
+
+.size-col {
+    width: 6rem;
+}
+
