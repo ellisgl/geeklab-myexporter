@@ -9,24 +9,25 @@ use Exception;
 use PDO;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticationController extends BaseController
 {
-    public function login(): void
+    public function login(): Response
     {
         $data = [];
 
         if (Request::METHOD_POST === $this->request->getMethod()) {
             try {
                 new PDO(
-                    'mysql:host=' . $this->config->get('servers')[(int)$this->request->request->get('host')]['HOST'] . ';',
+                    'mysql:host=' . $this->config->get('servers')[(int)$this->request->request->get('host')]['host'] . ';',
                     $this->request->request->get('username'),
                     $this->request->request->get('password'),
                     [PDO::ATTR_PERSISTENT => false]
                 );
 
                 $this->session->set('loggedIn', 1);
-                $this->session->set('dbh', $this->config->get('servers')[(int)$this->request->request->get('host')]['HOST']);
+                $this->session->set('dbh', $this->config->get('servers')[(int)$this->request->request->get('host')]['host']);
                 $this->session->set('dbu', $this->request->request->get('username'));
                 $this->session->set('dbp', $this->request->request->get('password'));
             } catch(Exception $e) {
@@ -51,5 +52,19 @@ class AuthenticationController extends BaseController
         $data['servers'] = $this->config->get('servers');
         $html = $this->renderer->render('Login', $data);
         $this->response->setContent($html);
+
+        return $this->response;
+    }
+
+    /**
+     * Log the current user out.
+     *
+     * @return Response
+     */
+    public function logout(): Response
+    {
+        $this->session->clear();
+
+        return new RedirectResponse('/');
     }
 }

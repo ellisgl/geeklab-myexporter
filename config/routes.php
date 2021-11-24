@@ -13,6 +13,11 @@ return [
             'handler' => [DbController::class, 'index']
         ],
         [
+            'methods' => ['GET'],
+            'path'    => '/logout',
+            'handler' => [AuthenticationController::class, 'logout']
+        ],
+        [
             'methods' => ['GET', 'POST'],
             'path'    => '/',
             'handler' => [AuthenticationController::class, 'login']

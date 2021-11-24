@@ -2,12 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Menu\ArrayMenuReader;
-use App\Menu\MenuReader;
-use App\Template\FrontendRenderer;
 use App\Core\Template\TwigRenderer;
 use App\Core\Renderer;
-use App\Template\FrontendTwigRenderer;
 use Auryn\Injector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,10 +41,5 @@ $injector->delegate('Twig_Environment', function () use ($injector) {
 });
 $injector->alias(Environment::class, 'Twig_Environment');
 $injector->alias(Renderer::class, TwigRenderer::class);
-
-// Template engine extending.
-$injector->alias(FrontendRenderer::class, FrontendTwigRenderer::class);
-$injector->alias(MenuReader::class, ArrayMenuReader::class);
-$injector->share(ArrayMenuReader::class);
 
 return $injector;

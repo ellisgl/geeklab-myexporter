@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Core;
 
 use App\Authentication\NotLoggedInException;
-use App\Template\FrontendTwigRenderer;
+use App\Core\Template\TwigRenderer;
 use GeekLab\Conf\GLConf;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,14 +14,14 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class BaseController
 {
     protected GLConf $config;
-    protected FrontendTwigRenderer $renderer;
+    protected TwigRenderer $renderer;
     protected Request $request;
     protected Response $response;
     protected Session $session;
 
     public function __construct(
         GLConf $config,
-        FrontendTwigRenderer $renderer,
+        TwigRenderer $renderer,
         Request $request,
         Response $response,
         Session $session

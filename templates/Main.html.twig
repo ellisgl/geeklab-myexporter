@@ -1,0 +1,25 @@
+{% extends "Wrapper.html.twig" %}
+{% block content %}
+    <main>
+        <div class="container bg-dark text-white">
+            <header class="d-flex flex-wrap justify-content-center py-3 mb-4">
+                <form class="d-flex mb-3 mb-md-0 me-md-auto col-4">
+                    <select class="form-select" id="database" aria-label="Database Selector">
+                        <option selected>Open this select menu</option>
+                        {% for database in databases %}
+                            <option id="{{ database }}">{{ database }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <div class="text-end">
+                    <button type="button" class="btn btn-warning">Logout</button>
+                </div>
+            </header>
+        </div>
+    </main>
+{% endblock %}
+{% block js %}
+    <script>
+        alert('hello!');
+    </script>
+{% endblock %}
