@@ -63,7 +63,6 @@ class DbController extends BaseController
     }
 
     public function getTables(array $data): JsonResponse {
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->checkAuthenticated();
         $excludedDatabases = $this->getExcludedDatabases();
         if (in_array($data['database'], $excludedDatabases, true)) {

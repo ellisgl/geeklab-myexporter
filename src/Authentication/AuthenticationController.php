@@ -19,12 +19,13 @@ class AuthenticationController extends BaseController
 
         if (Request::METHOD_POST === $this->request->getMethod()) {
             try {
-                new PDO(
+                $pdo = new PDO(
                     'mysql:host=' . $this->config->get('servers')[(int)$this->request->request->get('host')]['host'] . ';',
                     $this->request->request->get('username'),
                     $this->request->request->get('password'),
                     [PDO::ATTR_PERSISTENT => false]
                 );
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                 $this->session->set('loggedIn', 1);
                 $this->session->set('dbh', $this->config->get('servers')[(int)$this->request->request->get('host')]['host']);

@@ -37,7 +37,7 @@ $environment = $config->get('env');
 // Register the error handler.
 $whoops = new Run;
 
-if ($environment !== 'production') {
+if ('production' !== $environment) {
     $whoops->pushHandler(new PrettyPageHandler);
 } else {
     $whoops->pushHandler(function ($e) {
@@ -66,7 +66,7 @@ if (1 === $session->get('loggedIn')) {
         $session->get('dbp'),
         [PDO::ATTR_PERSISTENT => false]
     );
-
+    $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $injector->share($dbConn);
 }
 
@@ -85,6 +85,7 @@ $routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo(
 // Add in some extra case handling and execute the route endpoint.
 $errorController = $injector->make(ErrorController::class);
 
+// @Todo Wrap in try-catch to deal with HTTP error codes.
 /** @var Response $response */
 switch ($routeInfo[0]) {
     case Dispatcher::METHOD_NOT_ALLOWED:
