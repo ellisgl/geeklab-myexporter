@@ -10,9 +10,22 @@ use PDO;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class AuthenticationController extends BaseController
 {
+    /**
+     * Perform login.
+     *
+     * @Todo: Move logic to service or something.
+     *
+     * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function login(): Response
     {
         $data = [];

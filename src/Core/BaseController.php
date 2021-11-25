@@ -13,11 +13,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class BaseController
 {
-    protected GLConf $config;
+    protected GLConf       $config;
     protected TwigRenderer $renderer;
-    protected Request $request;
-    protected Response $response;
-    protected Session $session;
+    protected Request      $request;
+    protected Response     $response;
+    protected Session      $session;
 
     public function __construct(
         GLConf $config,
@@ -33,6 +33,11 @@ class BaseController
         $this->renderer = $renderer;
     }
 
+    /**
+     * @Todo: Does this need to be moved?
+     *
+     * @throws NotLoggedInException
+     */
     protected function checkAuthenticated(): void
     {
         if (!$this->session->get('loggedIn')) {

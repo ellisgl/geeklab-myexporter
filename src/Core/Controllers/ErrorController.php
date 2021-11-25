@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ErrorController extends BaseController
 {
+    // @Todo: More HTTP error code handling.
     /**
      * Create an HTTP 404 NOT FOUND error page.
      * @return Response

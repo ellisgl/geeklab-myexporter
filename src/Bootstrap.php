@@ -70,6 +70,7 @@ if (1 === $session->get('loggedIn')) {
     $injector->share($dbConn);
 }
 
+// @Todo: Replace with another router that can do middleware.
 // Routing code:
 // Load up routes for router, and initialize the dispatcher.
 $routeDefinitionCallback = static function (RouteCollector $r) use ($config) {

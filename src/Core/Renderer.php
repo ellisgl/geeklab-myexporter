@@ -6,5 +6,13 @@ namespace App\Core;
 
 interface Renderer
 {
-    public function render($template, $data = []): string;
+    /**
+     * Return a rendered template.
+     *
+     * @param       $template
+     * @param array $data
+     *
+     * @return string
+     */
+    public function render($template, array $data = []): string;
 }
