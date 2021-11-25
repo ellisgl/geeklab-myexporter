@@ -7,7 +7,7 @@ return [
         [
             'name' => 'The Box',
             'host' => '127.0.0.1',
-            'excluded_tables' => ['mysql', 'sys', 'information_schema', 'performance_schema'],
+            'excluded_databases' => ['mysql', 'sys', 'information_schema', 'performance_schema'],
         ],
     ]
 ];

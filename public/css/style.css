@@ -3,12 +3,28 @@ body {
     height: 100%;
 }
 
-table {
-    /*width: auto !important;*/
+.sortable th {
+    cursor: pointer;
+    text-align: left;
+    white-space: nowrap;
 }
 
-th.no-sort {
+.sortable th.no-sort {
     pointer-events: none;
+}
+
+.sortable th.dir-d::after {
+    color: inherit;
+    content: ' \025BE';
+}
+
+.sortable th.dir-u::after {
+    color: inherit;
+    content: ' \025B4';
+}
+
+.sortable td {
+    text-align: left;
 }
 
 .form-login {

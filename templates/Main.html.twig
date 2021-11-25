@@ -1,6 +1,5 @@
 {% extends "Wrapper.html.twig" %}
 {% block styles %}
-    <link rel="stylesheet" href="/assets/sortable/sortable.min.css">
 {% endblock %}
 {% block content %}
     <main>
@@ -8,7 +7,7 @@
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4">
                 <form class="d-flex mb-3 mb-md-0 me-md-auto col-4">
                     <select class="form-select" id="database" aria-label="Database Selector">
-                        <option selected>Open this select menu</option>
+                        <option value="" selected>Open this select menu</option>
                         {% for database in databases %}
                             <option id="{{ database }}">{{ database }}</option>
                         {% endfor %}
@@ -30,7 +29,12 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    <tr>
+                        <td>a</td>
+                        <td>b</td>
+                        <td>c</td>
+                        <td>d</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -39,24 +43,41 @@
 {% block js %}
     <script src="/assets/sortable/sortable.min.js"></script>
     <script>
+        const databaseSelect = document.getElementById('database');
         const tableBody = document.getElementById('table-table').getElementsByTagName('tbody')[0];
 
-        for(let i = 0; i < 3; ++i) {
-            const row = tableBody.insertRow();
-            const random = Math.floor(Math.random() * 999);
-            const c1 = row.insertCell();
-            c1.innerHTML = `Table Name here ${i}`;
-            c1.classList.add('text-start');
-            const c2 = row.insertCell();
-            c2.setAttribute('data-sort', `${random}`);
-            c2.innerHTML = `${random}M`;
-
-            const c3 = row.insertCell();
-            c3.innerHTML = `<input class="form-check-input" type="checkbox" name="schema['table1']" value="1" title="table${i} schema">`;
-            const  c4 = row.insertCell();
-            c4.innerHTML = `<input class="form-check-input" type="checkbox" name="data['table1']" value="1" title="table${i} data">`;
-
+        function clearRows(tableBody) {
+            tableBody.innerHTML = '';
         }
 
+        function createRow(tableBody, tableData) {
+            const row = tableBody.insertRow();
+            const random = Math.floor(Math.random() * 999);
+            const tableNameCell = row.insertCell();
+            tableNameCell.innerHTML = `Table Name here ${i}`;
+
+            const tableSizeCell = row.insertCell();
+            tableSizeCell.setAttribute('data-sort', `${random}`);
+            tableSizeCell.innerHTML = `${random}M`;
+
+            const schemaCell = row.insertCell();
+            schemaCell.innerHTML = `<input class="form-check-input" type="checkbox" name="schema['table1']" value="1" title="table${i} schema">`;
+
+            const dataCell = row.insertCell();
+            schemaCell.innerHTML = `<input class="form-check-input" type="checkbox" name="data['table1']" value="1" title="table${i} data">`;
+        }
+
+        databaseSelect.addEventListener('change', () => {
+            console.log(databaseSelect.value);
+            const val = databaseSelect.value;
+            clearRows(tableBody);
+
+            if (val !== '') {
+                fetch(`/db/${val}`)
+                    .then((res) => {
+                        console.log({res: res});
+                    })
+            }
+        });
     </script>
 {% endblock %}
