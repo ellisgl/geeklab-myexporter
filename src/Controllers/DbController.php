@@ -106,7 +106,7 @@ class DbController extends BaseController
         $stmt = $this->pdo->prepare(
             "
             SELECT
-              TABLE_NAME AS `table`,
+              TABLE_NAME AS `name`,
               (DATA_LENGTH + INDEX_LENGTH) AS `size`
             FROM
               information_schema.TABLES
