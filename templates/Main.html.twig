@@ -29,12 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>a</td>
-                        <td>b</td>
-                        <td>c</td>
-                        <td>d</td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
@@ -51,20 +46,20 @@
         }
 
         function createRow(tableBody, tableData) {
+            console.log(tableData);
             const row = tableBody.insertRow();
-            const random = Math.floor(Math.random() * 999);
             const tableNameCell = row.insertCell();
-            tableNameCell.innerHTML = `Table Name here ${i}`;
+            tableNameCell.innerHTML = `${tableData.name}`;
 
             const tableSizeCell = row.insertCell();
-            tableSizeCell.setAttribute('data-sort', `${random}`);
-            tableSizeCell.innerHTML = `${random}M`;
+            tableSizeCell.setAttribute('data-sort', `${tableData.size}`);
+            tableSizeCell.innerHTML = `xM`;
 
             const schemaCell = row.insertCell();
-            schemaCell.innerHTML = `<input class="form-check-input" type="checkbox" name="schema['table1']" value="1" title="table${i} schema">`;
+            schemaCell.innerHTML = `<input class="form-check-input" type="checkbox" name="schema['${tableData.name}']" value="1" title="${tableData.name} schema" checked="checked">`;
 
             const dataCell = row.insertCell();
-            schemaCell.innerHTML = `<input class="form-check-input" type="checkbox" name="data['table1']" value="1" title="table${i} data">`;
+            dataCell.innerHTML = `<input class="form-check-input" type="checkbox" name="data['${tableData.name}']" value="1" title="${tableData.name} data" checked="checked">`;
         }
 
         databaseSelect.addEventListener('change', () => {
@@ -74,9 +69,12 @@
 
             if (val !== '') {
                 fetch(`/db/${val}`)
-                    .then((res) => {
-                        console.log({res: res});
-                    })
+                    .then(res => res.json())
+                    .then((tables) => {
+                        for (const key in tables) {
+                            createRow(tableBody, tables[key]);
+                        }
+                    });
             }
         });
     </script>
