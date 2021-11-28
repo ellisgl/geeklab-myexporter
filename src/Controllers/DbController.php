@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Authentication\NotLoggedInException;
+use App\Authentication\AuthenticationInterface;
 use App\Core\BaseController;
 use App\Core\Template\TwigRenderer;
 use GeekLab\Conf\GLConf;
@@ -18,7 +18,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class DbController extends BaseController
+class DbController extends BaseController implements AuthenticationInterface
 {
     private PDO $pdo;
 
@@ -40,14 +40,13 @@ class DbController extends BaseController
      * @Todo: Move logic to service or something.
      *
      * @return Response
-     * @throws NotLoggedInException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
     public function index(): Response
     {
-        $this->checkAuthenticated();
+        // $this->checkAuthenticated();
         $data = ['databases' => []];
 
         $excludedTables = $this->getExcludedDatabases();
@@ -84,11 +83,10 @@ class DbController extends BaseController
      * @param array $data
      *
      * @return JsonResponse
-     * @throws NotLoggedInException
      */
     public function getTables(array $data): JsonResponse
     {
-        $this->checkAuthenticated();
+        // $this->checkAuthenticated();
         $excludedDatabases = $this->getExcludedDatabases();
         if (in_array($data['database'], $excludedDatabases, true)) {
             throw new BadRequestException('Bad Request');

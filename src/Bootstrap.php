@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Authentication\AuthenticationInterface;
+use App\Authentication\AuthenticationService;
 use App\Authentication\NotLoggedInException;
 use App\Core\Controllers\ErrorController;
 use Auryn\Injector;
@@ -58,6 +60,9 @@ $session = $injector->make(Session::class);
 // Share the configuration.
 $injector->share($config);
 
+/** @var AuthenticationService $authenticationService */
+$authenticationService = $injector->make(AuthenticationService::class);
+
 // Setup DB connections.
 if (1 === $session->get('loggedIn')) {
     $dbConn = new PDO(
@@ -70,7 +75,6 @@ if (1 === $session->get('loggedIn')) {
     $injector->share($dbConn);
 }
 
-// @Todo: Replace with another router that can do middleware.
 // Routing code:
 // Load up routes for router, and initialize the dispatcher.
 $routeDefinitionCallback = static function (RouteCollector $r) use ($config) {
@@ -99,6 +103,14 @@ switch ($routeInfo[0]) {
                 [$className, $method] = $routeInfo[1];
                 $vars = $routeInfo[2];
                 $class = $injector->make($className);
+
+                // We'll do a middleware the manual way, instead of the PSR-15 way.
+                // If the controller class implements the Authentication interface, do an authentication check.
+                if (in_array(AuthenticationInterface::class, class_implements($class), true)) {
+                    $authenticationService->checkAuthenticated();
+                }
+
+                // Execute the action method.
                 $response = $class->$method($vars);
             } elseif (is_callable($routeInfo[1])) {
                 // Closure endpoint.

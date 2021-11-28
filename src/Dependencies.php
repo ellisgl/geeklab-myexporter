@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Authentication\AuthenticationService;
 use App\Core\Template\TwigRenderer;
 use App\Core\Renderer;
 use Auryn\Injector;
@@ -33,6 +34,9 @@ $injector->share(Response::class);
 
 // Stuff for Session.
 $injector->share(Session::class);
+
+// Stuff for Authentication.
+$injector->share(AuthenticationService::class);
 
 // Template render
 $injector->delegate('Twig_Environment', function () use ($injector) {
