@@ -7,6 +7,9 @@ namespace App\Core\Controllers;
 use App\Core\BaseController;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * This is for handling HTTP errors.
+ */
 class ErrorController extends BaseController
 {
     // @Todo: More HTTP error code handling.

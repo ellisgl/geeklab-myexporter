@@ -27,7 +27,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 error_reporting(E_ALL);
 
-// Configuration
+// Initialize our configuration system.
 $config = new GLConf(
     new ArrayConfDriver(__DIR__ . '/../config/config.php', __DIR__ . '/../config/'),
     [],
@@ -37,8 +37,9 @@ $config->init();
 $environment = $config->get('env');
 
 // Register the error handler.
-$whoops = new Run;
+$whoops = new Run();
 
+// Determine how we want errors to be displayed in each environment.
 if ('production' !== $environment) {
     $whoops->pushHandler(new PrettyPageHandler);
 } else {
@@ -57,13 +58,14 @@ $request = $injector->make(Request::class);
 /** @var Session $session */
 $session = $injector->make(Session::class);
 
-// Share the configuration.
+// Share the configuration with the rest of the system.
 $injector->share($config);
 
+// Make sure we have authentication system created.
 /** @var AuthenticationService $authenticationService */
 $authenticationService = $injector->make(AuthenticationService::class);
 
-// Setup DB connections.
+// Setup database connection for a user that has logged in.
 if (1 === $session->get('loggedIn')) {
     $dbConn = new PDO(
         'mysql:host=' . $session->get('dbh') . ';',
@@ -84,7 +86,7 @@ $routeDefinitionCallback = static function (RouteCollector $r) use ($config) {
 };
 $dispatcher = simpleDispatcher($routeDefinitionCallback);
 
-// Match the route.
+// Match the request to a route.
 $routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
 
 // Add in some extra case handling and execute the route endpoint.
@@ -104,7 +106,7 @@ switch ($routeInfo[0]) {
                 $vars = $routeInfo[2];
                 $class = $injector->make($className);
 
-                // We'll do a middleware the manual way, instead of the PSR-15 way.
+                // We'll do a middleware the manual way, instead of the PSR-15 way for now, till I find something better.
                 // If the controller class implements the Authentication interface, do an authentication check.
                 if (in_array(AuthenticationInterface::class, class_implements($class), true)) {
                     $authenticationService->checkAuthenticated();
