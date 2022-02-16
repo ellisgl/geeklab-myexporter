@@ -15,7 +15,7 @@ use Twig\Environment;
 // Create the injector.
 $injector = new Injector();
 
-// Stuff for Request.
+// Create the request object so we can share it with our controller actions.
 $injector->share(Request::class);
 $injector->define(
     Request::class,
@@ -29,16 +29,16 @@ $injector->define(
     ]
 );
 
-// Stuff for Response.
+// Create the response object so we can output to our users.
 $injector->share(Response::class);
 
-// Stuff for Session.
+// Create the session object, so we can do things like keeping people logged in.
 $injector->share(Session::class);
 
-// Stuff for Authentication.
+// Create the authentication object, so people can login.
 $injector->share(AuthenticationService::class);
 
-// Template render
+// Create the template engine object, so we can easily make things pretty for our users.
 $injector->delegate('Twig_Environment', function () use ($injector) {
     $loader = new Twig_Loader_Filesystem(dirname(__DIR__) . '/templates');
     return new Environment($loader);
@@ -46,4 +46,5 @@ $injector->delegate('Twig_Environment', function () use ($injector) {
 $injector->alias(Environment::class, 'Twig_Environment');
 $injector->alias(Renderer::class, TwigRenderer::class);
 
+// Return the injector, so it can be used to inject our goodies.
 return $injector;
